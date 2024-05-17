@@ -11,11 +11,13 @@ def greet(event, say):
     say(f"Welcome to the OG gang, <@{event['user']}>.")
 
 
-@app.command("/praise")
-def echo_msg(ack, respond, command):
-    ack(f"Thanks <@{command['user_name']}> for your praises; we'll relay this message anonymously.")
+@app.command("/iamshy")
+def shy_announcement(ack, respond, command):
+    ack(f"Thanks <@{command['user_id']}> for your announcement; we'll relay this anonymously.")
 
-    respond(f"{command['text']}")
+    announcement = f"""Someone anonymously announced...\n"{command['text']}" """
+
+    app.client.chat_postMessage(channel=command['channel_id'], text=announcement)
     
 
 if __name__ == "__main__":
