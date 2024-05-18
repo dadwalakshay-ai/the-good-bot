@@ -2,13 +2,26 @@ from decouple import config
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
+from db import ORM
+
 
 app = App(token=config("SLACK_BOT_TOKEN"))
 
 
 @app.event("member_joined_channel")
 def greet(event, say):
-    say(f"Welcome to the OG gang, <@{event['user']}>.")
+    query_handler = ORM()
+
+    query_handler.create_user(event["user"])
+
+    say(f"Welcome to the OG gang, <@{event['user']}>\n<https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHpicmU5cHc5ZDBqOHU2NTRuNDc1OTBqeGxtMmlia2duYmZoYXZ3ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XD9o33QG9BoMis7iM4/giphy.gif|_>")
+
+
+@app.event("message")
+def handle_message_events(body, logger):
+    """Using this func to debug several User actions"""
+    print(body)
+    # import ipdb;ipdb.set_trace()
 
 
 @app.command("/iamshy")
