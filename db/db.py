@@ -21,3 +21,5 @@ class DBCursor:
         self.cursor.execute(query)
 
         self.conn.commit()
+
+        return self.cursor.lastrowid
