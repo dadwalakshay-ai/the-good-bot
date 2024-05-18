@@ -1,4 +1,4 @@
-from .db import DBCursor
+from db import DBCursor
 
 
 def migrate():
